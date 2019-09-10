@@ -1,3 +1,14 @@
+body{
+	padding: 20px 60px;
+}
+
+a{
+	color: #000000;
+}
+
+.up{
+	text-transform: uppercase;
+}
 .App {
   text-align: center;
 }
