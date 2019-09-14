@@ -1,3 +1,6 @@
+*{
+	box-sizing: border-box;
+}
 body{
 	padding: 20px 60px;
 }
@@ -41,4 +44,15 @@ a{
   to {
     transform: rotate(360deg);
   }
+}
+
+
+button,
+button:hover{
+	border: none;
+	background: none;
+	font-family: inherit;
+	font-size: inherit;
+	cursor: pointer;
+	text-decoration: underline;
 }
