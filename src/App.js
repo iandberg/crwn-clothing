@@ -8,7 +8,7 @@ import ShopPage from "./pages/shop/shop.component"
 import SignInAndSignUp from "./pages/sign-in-sign-up/sign-in-sign-up.component"
 import Header from "./components/header/header.component"
 // handle confirmation of google signin, at the top app level
-import {auth} from "./firebase/firebase.utils"
+import {auth, createUserProfileDocument} from "./firebase/firebase.utils"
 
 
 class App extends React.Component {
@@ -21,20 +21,35 @@ class App extends React.Component {
 		}
 	}
 
-	unsubscribeFromAuth = null
+	unsubscribeFromAuth = null // initialized class property
 
 	componentDidMount(){
-		//firebase stores logged in user - when user changes, we add to state - persists across session
-		//firebase.google keeps track
-		this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-			//open subscription, connection is open always checking in with firebase backend
-			//but we need to clean up on unmount
-			this.setState({currentUser: user})
+		this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+
+			if(userAuth){
+				const userRef = await createUserProfileDocument(userAuth)
+
+				userRef.onSnapshot(snapshot =>{
+					this.setState({
+						currentUser: {
+							id: snapshot.id,
+							...snapshot.data() //spreads out each property here
+						}
+					})
+				})
+
+			}else{
+				this.setState({currentUser: userAuth}) // setting to null, essentially
+			}
+
 		});
 		// returns a function that can unsubscribe
+
 	}
 
+
 	componentWillUnmount(){
+		// clean up memory
 		this.unsubscribeFromAuth()
 	}
 
