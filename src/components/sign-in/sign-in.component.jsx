@@ -5,7 +5,7 @@ import './sign-in.styles.scss'
 import FormInput from '../form-input/form-input.component.jsx'
 import CustomButton from '../custom-button/custom-button.component.jsx'
 
-import {signInWithGoogle} from '../../firebase/firebase.utils'
+import {auth, signInWithGoogle} from '../../firebase/firebase.utils'
 
 class SignIn extends React.Component{
 
@@ -26,9 +26,22 @@ class SignIn extends React.Component{
 		})
 	}
 
-	handleSubmit = (e)=>{
+	handleSubmit = async (e)=>{
 		e.preventDefault()
-		this.setState({})
+
+		const {email, password} = this.state
+
+		try{
+
+			await auth.signInWithEmailAndPassword(email, password)
+			this.setState({email: '', password: ''})
+
+		}catch(error){
+
+			console.error('there was an error: ', error.message);
+
+		}
+
 	}
 
 	render(){
@@ -37,7 +50,7 @@ class SignIn extends React.Component{
 					<h2>I already have an account</h2>
 					<span>Sign in with your email and password</span>
 
-					<form>
+					<form onSubmit={this.handleSubmit}>
 
 						<FormInput
 							label="Email"
