@@ -1,13 +1,17 @@
 import React from "react"
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import { connect } from 'react-redux'
 
-import {auth} from '../../firebase/firebase.utils'
+import { auth } from '../../firebase/firebase.utils'
 
-import {ReactComponent as Logo} from '../../assets/crown.svg'
+import CartIcon from '../cart-icon/cart-icon.component'
+import CartDropdown from '../cart-dropdown/cart-dropdown.component'
+
+import { ReactComponent as Logo } from '../../assets/crown.svg'
 
 import "./header.styles.scss"
+
 
 const Header = ({currentUser}) => (
 	<div className="header">
@@ -25,7 +29,12 @@ const Header = ({currentUser}) => (
 						:
 						<Link className='option up' to='/signinsignup'>Sign In</Link>
 				}
+
+				<CartIcon />
 		</div>
+
+		<CartDropdown />
+
 	</div>
 )
 
@@ -35,5 +44,7 @@ const mapStateToProps = state => ({
 	currentUser : state.user.currentUser
 })
 
+// state (root) user (has userReducer fn which return the state) currentUser (on the user state)
 // we wrap the header component with a higher-order component
+// this takes the root reducer's currentUser value and pass it as props to the Header comp.
 export default connect(mapStateToProps)(Header)
