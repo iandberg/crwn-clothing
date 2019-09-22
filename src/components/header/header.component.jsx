@@ -13,7 +13,7 @@ import { ReactComponent as Logo } from '../../assets/crown.svg'
 import "./header.styles.scss"
 
 
-const Header = ({currentUser}) => (
+const Header = ({currentUser, hidden}) => (
 	<div className="header">
 
 		<Link className="logo-container" to="/">
@@ -32,16 +32,15 @@ const Header = ({currentUser}) => (
 
 				<CartIcon />
 		</div>
-
-		<CartDropdown />
-
+			{ hidden ? null : <CartDropdown /> }
 	</div>
 )
 
 // getting properties from our reducer
 // mapStateToProps is a standard naming
-const mapStateToProps = state => ({
-	currentUser : state.user.currentUser
+const mapStateToProps = ({user: {currentUser},cart: {hidden}}) => ({
+	currentUser,
+	hidden
 })
 
 // state (root) user (has userReducer fn which return the state) currentUser (on the user state)
