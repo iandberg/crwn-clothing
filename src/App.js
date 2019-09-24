@@ -4,12 +4,21 @@ import { Route, Switch, Redirect } from "react-router-dom"
 
 import { connect } from 'react-redux'
 
+// ===================== Reselect =====================
+import { createStructuredSelector } from 'reselect'
+import { selectCurrentUser } from './redux/user/user.selectors'
+
 import './App.css';
 
 import Homepage from './pages/homepage/homepage.component'
 import ShopPage from './pages/shop/shop.component'
 import SignInAndSignUp from './pages/sign-in-sign-up/sign-in-sign-up.component'
+import CheckoutPage from './pages/checkout/checkout.component'
+
 import Header from './components/header/header.component'
+
+
+
 // handle confirmation of google signin, at the top app level
 import { auth, createUserProfileDocument } from './firebase/firebase.utils'
 // setCurrentUser is brought in from actions, to be assigned to an object that jams it into our App component's props
@@ -62,6 +71,7 @@ class App extends React.Component {
 				<Switch>
 					<Route path="/" exact component={Homepage} />
 					<Route path="/shop" component={ShopPage} />
+					<Route exact path="/checkout" component={CheckoutPage} />
 					<Route path="/signinsignup" exact render={()=>{
 							if(this.props.currentUser){
 								return <Redirect to="/"/>
@@ -77,8 +87,8 @@ class App extends React.Component {
 	}
 }
 
-const mapStateToProps = ({ user }) => ({
-	currentUser: user.currentUser
+const mapStateToProps = createStructuredSelector({
+	currentUser: selectCurrentUser
 })
 
 const mapDispatchToProps = dispatch => ({

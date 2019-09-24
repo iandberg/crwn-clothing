@@ -8,6 +8,11 @@ import { auth } from '../../firebase/firebase.utils'
 import CartIcon from '../cart-icon/cart-icon.component'
 import CartDropdown from '../cart-dropdown/cart-dropdown.component'
 
+import { createStructuredSelector } from 'reselect'
+
+import { selectCurrentUser } from '../../redux/user/user.selectors'
+import { selectCartHidden } from '../../redux/cart/cart.selectors'
+
 import { ReactComponent as Logo } from '../../assets/crown.svg'
 
 import "./header.styles.scss"
@@ -38,9 +43,9 @@ const Header = ({currentUser, hidden}) => (
 
 // getting properties from our reducer
 // mapStateToProps is a standard naming
-const mapStateToProps = ({user: {currentUser},cart: {hidden}}) => ({
-	currentUser,
-	hidden
+const mapStateToProps = createStructuredSelector({
+	currentUser : selectCurrentUser,
+	hidden : selectCartHidden
 })
 
 // state (root) user (has userReducer fn which return the state) currentUser (on the user state)
