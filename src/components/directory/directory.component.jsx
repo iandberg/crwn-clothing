@@ -1,17 +1,20 @@
-import React,{Component} from "react"
+import React from "react"
 
 import { connect } from 'react-redux'
 
+// pages/components
 import MenuItem from "../menu-item/menu-item.component"
+
+// selectors
 import { selectDirectorySections } from '../../redux/directory/directory.selectors'
 
+// styles
 import "./directory.styles.scss"
-
 
 const Directory = ({sections})=>(
 	<div className="directory-menu">
 			{
-				this.state.sections.map(({id, ...otherSectionProps})=>{							
+				sections.map(({id, ...otherSectionProps})=>{							
 
 					return <MenuItem 
 						key={id} 
