@@ -44,9 +44,28 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 	return userRef // a documentRef
 }
 
+// utility to batch import items to firestore - invoke somewhere once
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+
+	const collectionRef = firestore.collection(collectionKey)
+	
+	const batch = firestore.batch()
+
+	objectsToAdd.forEach(obj => {
+		const newDocRef = collectionRef.doc()
+		batch.set(newDocRef, obj)
+	})
+
+	// not working
+	return await batch.commit()
+}
+
+
+
 firebase.initializeApp(config)
 
-// you can find in docs
+
+
 
 export const auth = firebase.auth()
 export const firestore = firebase.firestore()

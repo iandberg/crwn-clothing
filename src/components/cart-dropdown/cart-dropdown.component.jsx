@@ -1,6 +1,5 @@
 import React from 'react'
 
-import CustomButton from '../custom-button/custom-button.component'
 import CartItem from '../cart-item/cart-item.component'
 
 import { selectCartItems } from '../../redux/cart/cart.selectors'
@@ -10,11 +9,12 @@ import { connect } from 'react-redux'
 
 import { withRouter } from 'react-router-dom'
 
-import './cart-dropdown.styles.scss'
+import { CartDropdownContainer } from './cart-dropdown.styles'
+import { CustomButtonContainer } from '../custom-button/custom-button.styles'
 
 const CartDropdown = ({cartItems, history, dispatch}) => (
 
-	<div className="cart-dropdown">
+	<CartDropdownContainer>
 		<div className="cart-items">
 				{
 					cartItems.length ? (
@@ -26,14 +26,14 @@ const CartDropdown = ({cartItems, history, dispatch}) => (
 				}
 		</div>
 
-		<CustomButton onClick={
+		<CustomButtonContainer onClick={
 			()=>{
 				history.push("/checkout")
 				dispatch(toggleCartHidden())
 			}
-		}>Go to Checkout</CustomButton>
+		}>Go to Checkout</CustomButtonContainer>
 
-	</div>
+	</CartDropdownContainer>
 )
 
 const mapStateToProps = state => ({

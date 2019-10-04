@@ -18,11 +18,13 @@ import CheckoutPage from './pages/checkout/checkout.component'
 import Header from './components/header/header.component'
 
 
-
 // handle confirmation of google signin, at the top app level
-import { auth, createUserProfileDocument } from './firebase/firebase.utils'
+import { auth, createUserProfileDocument, addCollectionAndDocuments } from './firebase/firebase.utils'
 // setCurrentUser is brought in from actions, to be assigned to an object that jams it into our App component's props
 import { setCurrentUser } from './redux/user/user.actions'
+
+// temp import
+import { selectCollectionsForPreview } from './redux/shop/shop.selectors'
 
 class App extends React.Component {
 
@@ -30,7 +32,7 @@ class App extends React.Component {
 
 	componentDidMount(){
 
-		const {setCurrentUser} = this.props
+		const {setCurrentUser, collectionsArray} = this.props
 
 		this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
 
@@ -56,6 +58,14 @@ class App extends React.Component {
 		});
 		// returns a function that can unsubscribe
 
+		// temp import
+		addCollectionAndDocuments('collections', collectionsArray.map(
+			({title, items}) => ({title, items})
+		)).then(function (info){
+			console.log(info);
+		},function (error){
+			console.log(error);
+		})
 	}
 
 
@@ -88,7 +98,9 @@ class App extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-	currentUser: selectCurrentUser
+	currentUser: selectCurrentUser,
+	// temp, for batch importing
+	collectionsArray: selectCollectionsForPreview
 })
 
 const mapDispatchToProps = dispatch => ({
