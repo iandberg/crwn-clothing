@@ -56,16 +56,33 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
 		batch.set(newDocRef, obj)
 	})
 
-	// not working
+	// works when logged out
 	return await batch.commit()
 }
 
+// gets snapshot object and converts to array of collections
+export const convertCollectionsSnapshotToMap = (collections) => {
 
+	// an array of collections that we need to convert to resemble our original SHOP_DATA object
+	const transformedCollections = collections.docs.map(doc => {
+		const { title, items } = doc.data()
+		return {
+			routeName: encodeURI(title.toLowerCase()),
+			id: doc.id,
+			title: title,
+			items: items
+		}
+	})
+
+	return transformedCollections.reduce((accumulator, collection)=>{
+		accumulator[collection.title.toLowerCase()] = collection
+
+		return accumulator
+	},{})
+
+}
 
 firebase.initializeApp(config)
-
-
-
 
 export const auth = firebase.auth()
 export const firestore = firebase.firestore()
