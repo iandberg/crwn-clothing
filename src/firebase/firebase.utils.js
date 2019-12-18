@@ -14,6 +14,15 @@ const config = {
     appId: "1:925863128681:web:3accc3571cc9f72134bcf8"
 }
 
+export const getCurrentUser = () => {
+	return new Promise((resolve, reject)=>{
+		const unsubscribe = auth.onAuthStateChanged(userAuth =>{
+			unsubscribe();
+			resolve(userAuth)
+		},reject)
+	})
+}
+
 export const createUserProfileDocument = async (userAuth, additionalData) => {
 
 	if(!userAuth) return;

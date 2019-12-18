@@ -9,8 +9,9 @@ import CartDropdown from '../cart-dropdown/cart-dropdown.component'
 
 // selectors
 import { createStructuredSelector } from 'reselect'
-import { selectCurrentUser } from '../../redux/user/user.selectors'
 import { selectCartHidden } from '../../redux/cart/cart.selectors'
+import { selectCurrentUser } from '../../redux/user/user.selectors'
+import { signOutStart } from '../../redux/user/user.actions'
 
 // styles
 import { 
@@ -24,9 +25,7 @@ import {
 import { ReactComponent as Logo } from '../../assets/crown.svg'
 
 
-
-
-const Header = ({currentUser, hidden}) => (
+const Header = ({currentUser, hidden, signOutStart}) => (
 	<HeaderContainer>
 
 		<LogoContainer to="/">
@@ -38,7 +37,7 @@ const Header = ({currentUser, hidden}) => (
 			<OptionLink to='/shop'>Shop</OptionLink>
 				{
 					currentUser ?
-						<OptionLink as='button' onClick={()=>auth.signOut()}>Sign Out</OptionLink>
+						<OptionLink as='button' onClick={signOutStart}>Sign Out</OptionLink>
 						:
 						<OptionLink to='/signinsignup'>Sign In</OptionLink>
 				}
@@ -57,7 +56,11 @@ const mapStateToProps = createStructuredSelector({
 	hidden : selectCartHidden
 })
 
+const mapDispatchToProps = dispatch => ({
+	signOutStart: () => dispatch(signOutStart())
+})
+
 // state (root) user (has userReducer fn which return the state) currentUser (on the user state)
 // we wrap the header component with a higher-order component
 // this takes the root reducer's currentUser value and pass it as props to the Header comp.
-export default connect(mapStateToProps)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
