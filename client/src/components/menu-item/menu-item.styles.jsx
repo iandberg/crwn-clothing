@@ -1,4 +1,8 @@
-$trans_time: 1s;
+import styled from 'styled-components'
+
+var trans_time = "1s";
+
+export const MenuItemContainer = styled.div`
 
 .menu-item {
 
@@ -16,10 +20,6 @@ $trans_time: 1s;
 
 	&.large{
 		height: 380px;
-
-		@media screen and (max-width: 800px){
-			height: 200px;
-		}
 	}
 
   &:first-child {
@@ -30,9 +30,6 @@ $trans_time: 1s;
     margin-left: 7.5px;
   }
 
-	@media screen and (max-width: 800px){
-		height: 200px;
-	}
 
 	.back_img{
 		position: absolute;
@@ -41,8 +38,8 @@ $trans_time: 1s;
 		background-position: center;
 		background-size: cover;
 
-		transition:         all $trans_time ease-in-out;
-		-webkit-transition: all $trans_time ease-in-out;
+		transition:         all 1 ease-in-out;
+		-webkit-transition: all 1 ease-in-out;
 	}
 
 	&:hover{
@@ -84,3 +81,4 @@ $trans_time: 1s;
     }
   }
 }
+`

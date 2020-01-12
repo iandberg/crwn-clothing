@@ -9,14 +9,13 @@ import { createStructuredSelector } from 'reselect'
 import { selectCurrentUser } from './redux/user/user.selectors'
 import { checkUserSession } from './redux/user/user.actions'
 
-import './App.css';
-
 import Homepage from './pages/homepage/homepage.component'
 import ShopPage from './pages/shop/shop.component'
 import SignInAndSignUp from './pages/sign-in-sign-up/sign-in-sign-up.component'
 import CheckoutPage from './pages/checkout/checkout.component'
-
 import Header from './components/header/header.component'
+
+import { GlobalStyle } from './global.styles'
 
 const App = ({ checkUserSession, currentUser }) => {
 
@@ -25,6 +24,7 @@ const App = ({ checkUserSession, currentUser }) => {
 	}, [checkUserSession]) //only invoke useEffect if checkUserSession changes, which it won't - this just mimics componentDidMount, a dummy property, just to satisfy the empty array 
 	return (
 		<div>
+			<GlobalStyle />
 			<Header />
 			<Switch>
 				<Route path="/" exact component={Homepage} />
