@@ -21,6 +21,7 @@ const ShopPage = ({ fetchCollectionsStart, match }) => {
 	return(
 		<div className="shop-page">
 			<Suspense fallback={<Spinner />}>
+
 				<Route 
 					exact 
 					path={`${match.path}`} 
