@@ -11,6 +11,7 @@ import './index.css';
 import App from './App';
 
 import { store, persistor } from './redux/store'
+import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(
 	<Provider store={store}>
@@ -23,3 +24,4 @@ ReactDOM.render(
 	, document.getElementById('root')
 );
 
+serviceWorker.register(); //is expecting service-worker.js file
